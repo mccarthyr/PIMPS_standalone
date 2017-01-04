@@ -1,4 +1,4 @@
-# PIMPS Standalone ### (Development version)
+# PIMPS Standalone - Development version
 
 ### Personalised Information Metrics Pulled from STRAVA (PIMPS)
 
