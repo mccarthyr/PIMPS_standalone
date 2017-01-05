@@ -80,7 +80,7 @@
                 <include>**/*</include>
                 </includes>
                 <!-- github repo name -->
-                <repositoryName>Maven_Java_Hello_World_Example</repositoryName>
+                <repositoryName>PIMPS_standalone</repositoryName>
                 <!-- github username -->
                 <repositoryOwner>mccarthyr</repositoryOwner>
           </configuration>
