@@ -3,7 +3,7 @@
   <groupId>com.fireduptech.pimps_standalone</groupId>
   <artifactId>PIMPS_standalone</artifactId>
   <packaging>jar</packaging>
-  <version>1.0</version>
+  <version>1.0-SNAPSHOT</version>
   <name>pimps</name>
   <url>http://maven.apache.org</url>
   
