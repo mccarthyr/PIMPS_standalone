@@ -6,7 +6,18 @@
 	<bean id="controller" 
 		class="com.fireduptech.pimps_standalone.controller.AthleteStatsController">
 		<property name="httpClientService" ref="httpClientService" />
+		<!--
+		<constructor-arg index="0" value="META-INF/config/appConfig.properties" />
+
+		<constructor-arg index="1" name="requestURIVariableSubstitutionMap" ref="requestURIVariableSubstitutionMap">
+		<util:map id="requestURIVariableSubstitutionMap" map-class="java.util.Map" >
+             <entry key="1" value="athleteId"/>
+             <entry key="3" value="activityId"/>
+            </util:map>
+		-->
 	</bean>
+
+
 
 	<bean id="httpClientService" 
 		class="com.fireduptech.pimps_standalone.service.HttpClientService">

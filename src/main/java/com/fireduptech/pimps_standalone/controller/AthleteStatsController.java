@@ -27,11 +27,18 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 
 import org.apache.http.HttpResponse;
 
-
 import com.google.gson.Gson;
 
+import java.text.MessageFormat;
+import java.util.Properties;
 
-
+import org.springframework.core.io.ClassPathResource;
+import com.fireduptech.pimps_standalone.Constants;
+ 
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.Iterator;
 
 public class AthleteStatsController {
 
@@ -45,7 +52,11 @@ public class AthleteStatsController {
 
     private static final String tokenUrl = "https://www.strava.com/oauth/token";
 
+
+
     private int athleteId = 0;  // Explicit default zero initialisation
+
+    private int activityId = 0;
 
     private static String authenticationToken = null;
 
@@ -53,8 +64,12 @@ public class AthleteStatsController {
 
 
 
-    //=> KEEP A LISTING OF REQUEST URLS AVAIABLE IN THIS CONTROLLER CLASS...
-    //String apiRequest = "https://www.strava.com/api/v3/athletes/" + athleteId +"/stats";
+    /*
+      ====== CONTAINS THE SETTING UP OF THE CONFIG PROPERTIES FILE THAT IS INJECTED INTO THIS VIA XML SETTINGS ======
+    public AthleteStatsController ( String configFile, Map<String, String> requestURIVariableSubstitutionMap ) {
+
+    }
+    */
 
 
 
@@ -129,6 +144,7 @@ public class AthleteStatsController {
 
 
 
+
     /* 
     {"biggest_ride_distance":101503.0,"biggest_climb_elevation_gain":397.0,
          "recent_ride_totals":{"count":18,"distance":763052.1918945312,"moving_time":97395,"elapsed_time":107154,"elevation_gain":5690.0,"achievement_count":122},
@@ -150,7 +166,6 @@ public class AthleteStatsController {
     */
     public float getTotalDistanceCycled() throws IOException {
 
-// ****** NOTE NOTE NOTE EXTRACT THE STATS AND STORE IN A CLASS LEVEL MAP...THEN HAVE A DIFFERENT METHOD THAT CAN DO A LOOK-UP ON THE REQUIRED VALUE...
 
         float totalDistanceCycled = 0.0f;
 
@@ -179,9 +194,118 @@ public class AthleteStatsController {
 
     }
 
+//    ++++++ PUT IN ANOTHER PARAMETER INDICATING THAT A VARIABLE SUBSTITUTION NEEDS TO BE DONE ++++++
+//        PASS THROUGH THE MENU OPTION ALSO AND USE THAT TO DECIDE WHICH GSON EXTRACTOR AND OBJECT MAPPING PROCESS TO CALL...
+    public void requestDataFromStravaAPI( String stravaRequestMenuOption, String stravaRequestAPIEndpoint, boolean requestURIVariableSubstitution ) {
+/*
+        THE SUBSTITUTION NEEDS TO BE CHECKED FIRST AS THIS NEEDS TO BE DONE BEFORE ANY REQUEST IS SENT TO STRAVA...
+
+        String apiRequest = Constants.STRAVA_API_BASE_URL + stravaRequestAPIEndpoint;
+
+        if ( requestURIVariableSubstitution ) {
+
+            // Check what variable needs to be substituted
+            USE THE MENU OPTION PASS IN FOR THIS ... PERHAPS THE MAP IS DONE IN THE CONSTRUCTOR AT THE START
+            OR IS PASSED IN AS A UTIL SCHEMA MAP FROM THE XML ???
+            => HashMap( Menu_Name, Variable_Name )
+
+NOTE******PLAN TO CODE NEXT: BEFORE INJECTING THE MAP IN VIA XML CONSTRUCTOR, CREATE A LOCAL MAP HERE WITH THE VALUES TO GET 
+                             THE MAP CODE DEFINITION WORKING AND USE IT HERE FIRST... ******
+
+            THE MENU NAMES MIGHT HAVE TO BE REPLACED BY A STRING INTEGER AS THAT IS WHAT IS PASSED THROUGH 
+            IN THE METHOD TO HERE . E.G. "1" OR "2" ETC...
+            <util:map id="requestURLVariableSubstitutionMap" map-class="java.util.Map" >
+             <entry key="1" value="athleteId"/>
+             <entry key="3" value="activityId"/>
+            </util:map>
+
+------------------------
+
+Map<Integer,String> hmap = new HashMap<Integer,String>();
+hmap.put( 1, "athleteId"  );
+hmap.put( 2, "activityId" );
+
+System.out.println( hmap.get(2) );
+Set set = hmap.entrySet();
+Iterator iterator = set.iterator();
+while( iterator.hasNext() ) {
+    Map.Entry mentry = (Map.Entry)iterator.next();
+    System.out.println( mentry.getValue() );
+}
 
 
+------------------------
+
+
+
+        }
+
+
+        if ( authenticated ) {
+
+            
+            String response = this.httpClientService.httpGet( apiRequest, authenticationToken );
+
+            extractAndMapResponseFromStravaAPI( stravaRequestMenuOption );
+
+            return true;
+        } else {
+            return false;
+        }
+*/
+
+    }   // End of method requestDataFromStravaAPI()...
+
+/*
+    private void extractAndMapResponseFromStravaAPI( String stravaRequestMenuOption ) {
+
+
+        switch ( stravaRequestMenuOption ) {
+            case Constants.ATHLETE_SUMMARY_MENU_OPTION:
+                System.out.println( Constants.ATHLETE_SUMMARY_API_ENDPOINT );
+                stravaRequestAPIEndpoint = Constants.ATHLETE_SUMMARY_API_ENDPOINT;
+                break;
+
+            case Constants.ATHLETE_HEART_RATE_ZONES_MENU_OPTION:
+                System.out.println( Constants.ATHLETE_HEART_RATE_ZONES_API_ENDPOINT );
+                stravaRequestAPIEndpoint = Constants.ATHLETE_HEART_RATE_ZONES_API_ENDPOINT;
+                break;
+
+            case Constants.ATHLETE_TOTALS_MENU_OPTION:
+                System.out.println( Constants.ATHLETE_TOTALS_API_ENDPOINT );
+                stravaRequestAPIEndpoint = Constants.ATHLETE_TOTALS_API_ENDPOINT;
+
+                //message = Constants.ATHLETE_TOTALS_API_ENDPOINT;
+                //message = String.format( message, aId );  
+
+                break;
+
+            case Constants.ATHLETE_SUMMARY_ACTIVITIES_MENU_OPTION:
+                System.out.println( Constants.ATHLETE_SUMMARY_ACTIVITIES_API_ENDPOINT );
+                stravaRequestAPIEndpoint = Constants.ATHLETE_SUMMARY_ACTIVITIES_API_ENDPOINT;
+                break;
+
+            case Constants.ATHLETE_ACTIVITY_DETAILS_MENU_OPTION:
+                System.out.println( Constants.ATHLETE_ACTIVITY_DETAILS_API_ENDPOINT );
+                stravaRequestAPIEndpoint = Constants.ATHLETE_ACTIVITY_DETAILS_API_ENDPOINT;
+                
+                //System.out.println( String.format( Constants.ATHLETE_ACTIVITY_DETAILS_API_ENDPOINT, actId ) );
+                break;
+
+            default:
+                System.out.println( "Please enter a value from the menu options" );   // ??? REPLACES THIS WITH A THROW EXCEPTION ???
+                break;
+        } 
+
+
+
+    }   // End of method extractAndMapResponseFromStravaAPI()...
+*/
 
 
 
 }
+
+
+
+
